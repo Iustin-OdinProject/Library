@@ -9,17 +9,54 @@
     <title>Library</title>
 </head>
 <body>
-    <h2>Modal Example</h2>
 
-    <button id="openFormButton">Open Modal</button>
+  
+  <div class="page">
+    <div class="nav_menu">
+      <h2>My library</h2>
+      <button id="openFormButton">Open Modal</button>
+    </div>
+    <div class="books">
+      <h2>Books:</h2>
+      <div id="books_grid">
+        <div class="book_item">
+          <h3>Title</h3>
+          <h4>Author</h4>
+          <h4>Number of pages</h4>
+          <button class="remove_book">Remove book</button>
+        </div>
+    
+  </div>
 
-    <div id="myModal" class="modal">
+    <div id="addBookForm" class="modal">
       <div class="modal-content">
         <span class="close">&times;</span>
-        <p>Some text in the Modal..</p>
-      </div>
+        <form class="add_book">
+          <h1>Add a book</h1>
+          <input 
+            class="input"
+            type="text"
+            id="title"
+            placeholder="Title" 
+            required maxlength="100"
+          />
+          <input
+            class="input"
+            type="text"
+            id="author"
+            placeholder="Author"
+            required maxlength="100"
+          />
+          <input
+            class="input"
+            type="number"
+            id="pages"
+            placeholder="Number of pages"
+          />
+          <button class="input" type="submit">Submit</button>
+        </form>
+        </div>
     </div>
-
     <script src="code.js"></script>
 </body>
 </html>

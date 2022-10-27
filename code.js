@@ -1,25 +1,101 @@
-// Get the modal
-var modal = document.getElementById("addBookForm");
+const BookGrid = document.getElementById('books_grid')
 
-// Get the button that opens the modal
-var btn = document.getElementById("openFormButton");
+let myLibrary = [];
 
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks the button, open the modal 
-btn.onclick = function() {
-  modal.style.display = "block";
-}
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
+class Book {
+  constructor(
+    title = 'none',
+    author = 'none',
+    pages = '0',
+  ) {
+    this.title = title
+    this.author = author
+    this.pages = pages
   }
+}
+
+/*
+  <div class="book_item">
+    <h3>Title</h3>
+    <h4>Author</h4>
+    <h4>Number of pages</h4>
+    <button class="remove_book">Remove book</button>
+  </div>
+*/
+
+//Open and close form
+const Form = document.getElementById("addBookForm");
+const Form_OpenButton = document.getElementById("openFormButton");
+const Form_CloseButton = document.getElementsByClassName("close")[0];
+
+Form_OpenButton.onclick = function() {
+  Form.style.display = "block";
+}
+Form_CloseButton.onclick = function() {
+  Form.style.display = "none";
+}
+window.onclick = function(event) {
+  if (event.target == Form) {
+    Form.style.display = "none";
+  }
+}
+
+
+const getBookFromInput = () => {
+  const title = document.getElementById('title').value
+  const author = document.getElementById('author').value
+  const pages = document.getElementById('pages').value
+  return new Book(title, author, pages)
+}
+
+
+const updateBooksGrid = () => {
+  resetBooksGrid()
+  for (let i=0;i< myLibrary.length;i++) {
+    createBookItem(myLibrary[i])
+    console.log(myLibrary[i])
+  }
+}
+
+const resetBooksGrid = () => {
+  BookGrid.innerHTML = ''
+}
+
+const addBook = (e) => {
+  e.preventDefault()
+  const newBook = getBookFromInput()
+
+  myLibrary.push(newBook);
+  
+  updateBooksGrid()
+}
+
+Form.onsubmit = addBook
+
+const removeBook = (bo) => {
+  myLibrary = myLibrary.filter(function(el) { return el.title != bo.title;})
+  resetBooksGrid()
+}
+
+const createBookItem = (book) => {
+  const BookItem = document.createElement('div')
+  const Title = document.createElement('h3')
+  const Author = document.createElement('h4')
+  const pages = document.createElement('h4')
+  const removeButton = document.createElement('button')
+
+  BookItem.classList.add('book_item')
+  removeButton.classList.add('remove_book')
+
+
+  Title.textContent = `"${book.title}"`
+  Author.textContent = book.author
+  pages.textContent = `${book.pages} pages`
+  removeButton.textContent = 'Remove'
+
+  BookItem.appendChild(Title)
+  BookItem.appendChild(Author)
+  BookItem.appendChild(pages)
+  BookItem.appendChild(removeButton)
+  BookGrid.appendChild(BookItem)
 }
