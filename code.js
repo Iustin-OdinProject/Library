@@ -45,6 +45,8 @@ const getBookFromInput = () => {
   const title = document.getElementById('title').value
   const author = document.getElementById('author').value
   const pages = document.getElementById('pages').value
+  
+ 
   return new Book(title, author, pages)
 }
 
@@ -62,15 +64,25 @@ const resetBooksGrid = () => {
 }
 
 const addBook = (e) => {
+  
   e.preventDefault()
   const newBook = getBookFromInput()
-
+  if (document.getElementById('pages').value.length == 0) {
+    document.getElementById('pages').style.borderColor = "red"
+    console.log("34")
+    return 0;
+  }
+  else{
+  
+  Form.style.display = "none";
   myLibrary.push(newBook);
   
-  updateBooksGrid()
+  updateBooksGrid()}
 }
 
 Form.onsubmit = addBook
+
+
 
 const removeBook = (bo) => {
   myLibrary = myLibrary.filter(function(el) { return el.title != bo.title;})
@@ -86,7 +98,7 @@ const createBookItem = (book) => {
 
   BookItem.classList.add('book_item')
   removeButton.classList.add('remove_book')
-
+  removeButton.onclick = removeBook
 
   Title.textContent = `"${book.title}"`
   Author.textContent = book.author
